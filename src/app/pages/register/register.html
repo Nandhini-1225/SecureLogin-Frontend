@@ -1,0 +1,103 @@
+<div class="register-page">
+
+  <div class="register-card">
+
+    <h1>SecureLogin</h1>
+
+    <p class="subtitle">
+      Create your SecureLogin account
+    </p>
+
+    @if (message) {
+      <div class="success-message">
+        {{ message }}
+      </div>
+    }
+
+    @if (errorMessage) {
+      <div class="error-message">
+        {{ errorMessage }}
+      </div>
+    }
+
+    <form (ngSubmit)="register()">
+
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+
+        <input
+          id="firstName"
+          type="text"
+          name="firstName"
+          [(ngModel)]="firstName"
+          placeholder="Enter your first name"
+          autocomplete="given-name"
+        />
+      </div>
+
+
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+
+        <input
+          id="lastName"
+          type="text"
+          name="lastName"
+          [(ngModel)]="lastName"
+          placeholder="Enter your last name"
+          autocomplete="family-name"
+        />
+      </div>
+
+
+      <div class="form-group">
+        <label for="email">Email</label>
+
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email"
+          autocomplete="email"
+        />
+      </div>
+
+
+      <div class="form-group">
+        <label for="password">Password</label>
+
+        <input
+          id="password"
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Enter your password"
+          autocomplete="new-password"
+        />
+
+        <small>
+          Minimum 12 characters with uppercase, lowercase,
+          number and special character.
+        </small>
+      </div>
+
+
+      <button
+        type="submit"
+        [disabled]="isLoading"
+      >
+        {{ isLoading ? 'Creating account...' : 'Create Account' }}
+      </button>
+
+    </form>
+
+
+    <p class="login-link">
+      Already have an account?
+      <a routerLink="/login">Login</a>
+    </p>
+
+  </div>
+
+</div>

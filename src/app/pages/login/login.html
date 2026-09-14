@@ -1,0 +1,124 @@
+<div class="login-page">
+
+  <div class="login-card">
+
+    <h1>SecureLogin</h1>
+
+    <p class="subtitle">
+      Sign in to your account
+    </p>
+
+    <!-- SUCCESS MESSAGE -->
+
+    @if (message) {
+      <p class="success-message">
+        {{ message }}
+      </p>
+    }
+
+    <!-- ERROR MESSAGE -->
+
+    @if (errorMessage) {
+      <p class="error-message">
+        {{ errorMessage }}
+      </p>
+    }
+
+    <!-- LOGIN FORM -->
+
+    <form (ngSubmit)="login()">
+
+      <div class="form-group">
+
+        <label for="email">
+          Email
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email"
+          autocomplete="email"
+          required
+        />
+
+      </div>
+
+      <div class="form-group">
+
+        <label for="password">
+          Password
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+          required
+        />
+
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="isLoading"
+      >
+        {{ isLoading ? 'Logging in...' : 'Login' }}
+      </button>
+
+    </form>
+
+    <p class="register-link">
+
+      Don't have an account?
+
+      <a routerLink="/register">
+        Create account
+      </a>
+
+    </p>
+
+  </div>
+
+
+  <!-- ==========================================
+       LOGIN SUCCESS POPUP
+       ========================================== -->
+
+  @if (showSuccessPopup) {
+
+    <div class="popup-overlay">
+
+      <div class="success-popup">
+
+        <div class="success-icon">
+          ✓
+        </div>
+
+        <h2>
+          Login Successful!
+        </h2>
+
+        <p>
+          You have successfully logged in.
+        </p>
+
+        <button
+          type="button"
+          (click)="continueAfterLogin()"
+        >
+          Continue
+        </button>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

@@ -1,0 +1,343 @@
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f6f8;
+  padding: 20px;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 460px;
+  background: white;
+  padding: 40px;
+  border-radius: 14px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  margin: 0;
+  font-size: 32px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+small {
+  display: block;
+  margin-top: 6px;
+  color: #666;
+  line-height: 1.4;
+}
+
+button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.success-message {
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background: #ecfdf5;
+  color: #047857;
+  text-align: center;
+}
+
+.error-message {
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background: #fef2f2;
+  color: #b91c1c;
+  text-align: center;
+}
+
+.login-text {
+  text-align: center;
+  margin-top: 25px;
+  color: #666;
+}
+
+a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+@media (max-width: 500px) {
+  .register-card {
+    padding: 28px 20px;
+  }
+}
+
+/* ================================
+   REGISTRATION SUCCESS POPUP
+   ================================ */
+
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.55);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.success-popup {
+  width: 100%;
+  max-width: 420px;
+
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 40px 30px;
+
+  text-align: center;
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.3);
+
+  animation: popupAppear 0.25s ease-out;
+}
+
+.success-icon {
+  width: 70px;
+  height: 70px;
+
+  margin: 0 auto 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+
+  background: #2e9d59;
+
+  color: white;
+
+  font-size: 42px;
+  font-weight: bold;
+}
+
+.success-popup h2 {
+  margin: 0 0 15px;
+
+  font-size: 27px;
+}
+
+.success-popup p {
+  margin: 8px 0;
+
+  color: #555;
+
+  font-size: 16px;
+}
+
+.success-popup .verification-text {
+  margin-bottom: 25px;
+
+  font-size: 14px;
+
+  color: #777;
+}
+
+.success-popup button {
+  width: 100%;
+
+  padding: 13px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #315dcc;
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.success-popup button:hover {
+  background: #244da8;
+}
+
+@keyframes popupAppear {
+
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+}
+
+/* ==========================================
+   ALREADY REGISTERED POPUP
+   ========================================== */
+
+.already-registered-popup {
+  width: 100%;
+  max-width: 420px;
+
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 40px 30px;
+
+  text-align: center;
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.3);
+
+  animation: popupAppear 0.25s ease-out;
+}
+
+.warning-icon {
+  width: 70px;
+  height: 70px;
+
+  margin: 0 auto 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+
+  background: #f0a202;
+
+  color: white;
+
+  font-size: 42px;
+  font-weight: bold;
+}
+
+.already-registered-popup h2 {
+  margin: 0 0 15px;
+
+  font-size: 27px;
+}
+
+.already-registered-popup p {
+  margin: 8px 0;
+
+  color: #555;
+
+  font-size: 16px;
+}
+
+.already-registered-popup .login-message {
+  margin-bottom: 25px;
+
+  font-size: 14px;
+
+  color: #777;
+}
+
+.popup-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.popup-buttons button {
+  flex: 1;
+
+  padding: 13px;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.login-button {
+  border: none;
+
+  background: #315dcc;
+
+  color: white;
+}
+
+.login-button:hover {
+  background: #244da8;
+}
+
+.close-button {
+  border: 1px solid #ccc;
+
+  background: white;
+
+  color: #444;
+}
+
+.close-button:hover {
+  background: #f3f3f3;
+}
