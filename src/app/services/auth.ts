@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
- private readonly apiUrl =
-  'https://performances-isp-months-gzip.trycloudflare.com/api/Auth';
+  private readonly apiUrl =
+    'https://securelogin-api-2026-bvgubxg6h3fva6b7.indiasouthcentral-01.azurewebsites.net/api/Auth';
 
   constructor(
     private http: HttpClient
