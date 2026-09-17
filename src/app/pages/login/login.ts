@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component
+} from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
+
 import {
   Router,
   RouterLink
@@ -52,7 +57,8 @@ export class Login {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
 
@@ -62,16 +68,12 @@ export class Login {
 
   login(): void {
 
-    // Clear previous messages
     this.message = '';
     this.errorMessage = '';
-
-    // Close popup if it was previously open
     this.showSuccessPopup = false;
 
-
     // ==============================
-    // BASIC VALIDATION
+    // VALIDATION
     // ==============================
 
     if (
@@ -82,6 +84,8 @@ export class Login {
       this.errorMessage =
         'Email and password are required.';
 
+      this.changeDetectorRef.detectChanges();
+
       return;
     }
 
@@ -91,6 +95,8 @@ export class Login {
     // ==============================
 
     this.isLoading = true;
+
+    this.changeDetectorRef.detectChanges();
 
 
     console.log(
@@ -112,7 +118,7 @@ export class Login {
 
 
     // ==============================
-    // SEND LOGIN REQUEST
+    // API REQUEST
     // ==============================
 
     this.authService
@@ -151,7 +157,7 @@ export class Login {
 
 
           // ==========================
-          // GET JWT TOKEN
+          // GET JWT
           // ==========================
 
           const token =
@@ -187,7 +193,7 @@ export class Login {
 
 
           // ==========================
-          // SHOW SUCCESS POPUP
+          // SHOW POPUP
           // ==========================
 
           this.showSuccessPopup = true;
@@ -207,6 +213,14 @@ export class Login {
             'Loading:',
             this.isLoading
           );
+
+
+          // ==========================
+          // FORCE UI UPDATE
+          // ==========================
+
+          this.changeDetectorRef.detectChanges();
+
         },
 
 
@@ -242,12 +256,12 @@ export class Login {
           // Stop loading
           this.isLoading = false;
 
-          // Make sure success popup is closed
+          // Close success popup
           this.showSuccessPopup = false;
 
 
           // ==========================
-          // 401 - UNAUTHORIZED
+          // 401
           // ==========================
 
           if (error.status === 401) {
@@ -256,12 +270,14 @@ export class Login {
               error.error?.message ||
               'Invalid email or password, or email is not verified.';
 
+            this.changeDetectorRef.detectChanges();
+
             return;
           }
 
 
           // ==========================
-          // 429 - RATE LIMITED
+          // 429
           // ==========================
 
           if (error.status === 429) {
@@ -269,12 +285,14 @@ export class Login {
             this.errorMessage =
               'Too many login attempts. Please try again later.';
 
+            this.changeDetectorRef.detectChanges();
+
             return;
           }
 
 
           // ==========================
-          // 400 - BAD REQUEST
+          // 400
           // ==========================
 
           if (error.status === 400) {
@@ -283,12 +301,14 @@ export class Login {
               error.error?.message ||
               'Please check the information you entered.';
 
+            this.changeDetectorRef.detectChanges();
+
             return;
           }
 
 
           // ==========================
-          // 403 - FORBIDDEN
+          // 403
           // ==========================
 
           if (error.status === 403) {
@@ -297,18 +317,22 @@ export class Login {
               error.error?.message ||
               'Access denied. Please verify your account.';
 
+            this.changeDetectorRef.detectChanges();
+
             return;
           }
 
 
           // ==========================
-          // 500+ - SERVER ERROR
+          // 500+
           // ==========================
 
           if (error.status >= 500) {
 
             this.errorMessage =
               'Server error. Please try again later.';
+
+            this.changeDetectorRef.detectChanges();
 
             return;
           }
@@ -320,6 +344,9 @@ export class Login {
 
           this.errorMessage =
             'Unable to connect to the server.';
+
+          this.changeDetectorRef.detectChanges();
+
         }
 
       });
@@ -334,6 +361,8 @@ export class Login {
 
     this.showPassword =
       !this.showPassword;
+
+    this.changeDetectorRef.detectChanges();
   }
 
 
@@ -347,12 +376,10 @@ export class Login {
       'Continue button clicked.'
     );
 
-
-    // Close popup
     this.showSuccessPopup = false;
 
+    this.changeDetectorRef.detectChanges();
 
-    // Navigate to home
     this.router.navigate(['/']);
   }
 
