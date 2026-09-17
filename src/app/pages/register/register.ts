@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component
+} from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
+
 import {
   Router,
   RouterLink
@@ -29,25 +34,27 @@ export class Register {
 
   isLoading = false;
 
+  showPassword = false;
+
   showSuccessPopup = false;
-  showAlreadyRegisteredPopup = false;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
+
+  // ==========================================
+  // REGISTRATION
+  // ==========================================
 
   register(): void {
 
     this.message = '';
     this.errorMessage = '';
-
     this.showSuccessPopup = false;
-    this.showAlreadyRegisteredPopup = false;
 
-
-    /* VALIDATION */
-
+    // Basic frontend validation
     if (
       !this.firstName.trim() ||
       !this.lastName.trim() ||
@@ -58,30 +65,22 @@ export class Register {
       this.errorMessage =
         'Please fill in all fields.';
 
+      this.changeDetectorRef.detectChanges();
+
       return;
     }
 
-
     this.isLoading = true;
 
+    this.changeDetectorRef.detectChanges();
 
-    console.log(
-      '================================='
-    );
-
-    console.log(
-      'REGISTRATION REQUEST STARTED'
-    );
-
+    console.log('=================================');
+    console.log('REGISTRATION REQUEST STARTED');
     console.log(
       'Email:',
       this.email.trim()
     );
-
-    console.log(
-      '================================='
-    );
-
+    console.log('=================================');
 
     this.authService
       .register(
@@ -92,9 +91,17 @@ export class Register {
       )
       .subscribe({
 
-        /* SUCCESS */
+        // ========================================
+        // REGISTRATION SUCCESS
+        // ========================================
 
         next: (response) => {
+
+          this.isLoading = false;
+
+          console.log(
+            '================================='
+          );
 
           console.log(
             'REGISTRATION SUCCESS'
@@ -105,54 +112,32 @@ export class Register {
             response
           );
 
-
-          this.isLoading = false;
-
+          console.log(
+            '================================='
+          );
 
           this.message =
             'Registration successful!';
 
-
-          /*
-           * SHOW SUCCESS POPUP
-           */
-
           this.showSuccessPopup = true;
 
-
-          /*
-           * CLEAR FORM
-           */
-
+          // Clear form
           this.firstName = '';
           this.lastName = '';
           this.email = '';
           this.password = '';
 
-
-          /*
-           * AUTOMATIC REDIRECT
-           *
-           * User still has time to see
-           * the successful registration popup.
-           */
-
-          setTimeout(() => {
-
-            if (this.showSuccessPopup) {
-
-              this.goToLogin();
-
-            }
-
-          }, 4000);
-
+          this.changeDetectorRef.detectChanges();
         },
 
 
-        /* ERROR */
+        // ========================================
+        // REGISTRATION ERROR
+        // ========================================
 
         error: (error) => {
+
+          this.isLoading = false;
 
           console.error(
             '================================='
@@ -177,104 +162,89 @@ export class Register {
           );
 
 
-          this.isLoading = false;
-
-
-          /*
-           * ALREADY REGISTERED
-           */
-
+          // Already registered
           if (error.status === 409) {
 
             this.errorMessage =
               'This email is already registered.';
 
-            this.showAlreadyRegisteredPopup =
-              true;
+            this.changeDetectorRef.detectChanges();
 
             return;
           }
 
 
-          /*
-           * BAD REQUEST
-           */
-
+          // Bad request
           if (error.status === 400) {
 
             this.errorMessage =
               error.error?.message ||
               'Invalid registration details.';
 
+            this.changeDetectorRef.detectChanges();
+
             return;
           }
 
 
-          /*
-           * RATE LIMIT
-           */
-
+          // Rate limit
           if (error.status === 429) {
 
             this.errorMessage =
               'Too many requests. Please try again later.';
 
+            this.changeDetectorRef.detectChanges();
+
             return;
           }
 
 
-          /*
-           * SERVER ERROR
-           */
-
+          // Server error
           if (error.status >= 500) {
 
             this.errorMessage =
               'Server error. Please try again later.';
 
+            this.changeDetectorRef.detectChanges();
+
             return;
           }
 
 
-          /*
-           * OTHER ERROR
-           */
-
+          // Unknown error
           this.errorMessage =
             'Unable to connect to the server.';
 
+          this.changeDetectorRef.detectChanges();
         }
-
       });
   }
 
 
-  /*
-   * GO TO LOGIN
-   */
+  // ==========================================
+  // SHOW / HIDE PASSWORD
+  // ==========================================
+
+  togglePassword(): void {
+
+    this.showPassword =
+      !this.showPassword;
+
+    this.changeDetectorRef.detectChanges();
+  }
+
+
+  // ==========================================
+  // GO TO LOGIN
+  // ==========================================
 
   goToLogin(): void {
 
     this.showSuccessPopup = false;
 
-    this.showAlreadyRegisteredPopup = false;
+    this.changeDetectorRef.detectChanges();
 
-    this.router.navigate([
-      '/login'
-    ]);
-
-  }
-
-
-  /*
-   * CLOSE ALREADY REGISTERED POPUP
-   */
-
-  closeAlreadyRegisteredPopup(): void {
-
-    this.showAlreadyRegisteredPopup =
-      false;
-
+    this.router.navigate(['/login']);
   }
 
 }

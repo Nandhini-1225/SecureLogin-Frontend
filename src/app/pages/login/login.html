@@ -1,223 +1,276 @@
 <div class="login-page">
 
-  <div class="background-shape shape-one"></div>
-  <div class="background-shape shape-two"></div>
+  <!-- BACKGROUND DECORATION -->
 
-  <div class="login-card">
+  <div class="background-glow glow-one"></div>
+  <div class="background-glow glow-two"></div>
+
+
+  <!-- MAIN AUTH CONTAINER -->
+
+  <main class="auth-container">
 
     <!-- BRAND -->
+
     <div class="brand-section">
-      <h1>SecureLogin</h1>
 
-      <p>
-        Secure access to your account
-      </p>
+      <div class="brand-mark">
+        SL
+      </div>
+
+      <div>
+
+        <h1>
+          Secure<span>Login</span>
+        </h1>
+
+        <p>
+          Secure access to your account
+        </p>
+
+      </div>
+
     </div>
 
 
-    <!-- WELCOME -->
-    <div class="welcome-section">
+    <!-- LOGIN CARD -->
 
-      <h2>Welcome back</h2>
+    <section class="login-card">
 
-      <p>
-        Sign in to continue to your account.
-      </p>
+      <div class="card-header">
 
-    </div>
-
-
-    <!-- SUCCESS / ERROR MESSAGE -->
-    @if (message) {
-
-      <div class="message success-message">
-
-        <span class="message-icon">
-          ✓
+        <span class="eyebrow">
+          WELCOME BACK
         </span>
 
-        <span>
-          {{ message }}
-        </span>
+        <h2>
+          Sign in to continue
+        </h2>
 
-      </div>
-
-    }
-
-
-    @if (errorMessage) {
-
-      <div class="message error-message">
-
-        <span class="message-icon">
-          !
-        </span>
-
-        <span>
-          {{ errorMessage }}
-        </span>
-
-      </div>
-
-    }
-
-
-    <!-- LOGIN FORM -->
-    <form
-      class="login-form"
-      (ngSubmit)="login()"
-      autocomplete="on"
-    >
-
-      <!-- EMAIL -->
-      <div class="form-group">
-
-        <label for="email">
-          Email address
-        </label>
-
-        <input
-          id="email"
-          type="email"
-          name="email"
-          [(ngModel)]="email"
-          placeholder="Enter your email"
-          autocomplete="email"
-          required
-        />
+        <p>
+          Enter your credentials to access your secure account.
+        </p>
 
       </div>
 
 
-      <!-- PASSWORD -->
-      <div class="form-group">
+      <!-- SUCCESS MESSAGE -->
 
-        <div class="password-header">
+      @if (message) {
 
-          <label for="password">
-            Password
+        <div class="inline-success">
+
+          <span class="message-icon">
+            ✓
+          </span>
+
+          <span>
+            {{ message }}
+          </span>
+
+        </div>
+
+      }
+
+
+      <!-- ERROR MESSAGE -->
+
+      @if (errorMessage) {
+
+        <div class="inline-error">
+
+          <span class="message-icon">
+            !
+          </span>
+
+          <span>
+            {{ errorMessage }}
+          </span>
+
+        </div>
+
+      }
+
+
+      <!-- LOGIN FORM -->
+
+      <form
+        (ngSubmit)="login()"
+        autocomplete="on"
+      >
+
+        <!-- EMAIL -->
+
+        <div class="form-group">
+
+          <label for="email">
+            Email address
           </label>
 
-          <a
-            routerLink="/forgot-password"
-            class="forgot-password"
-          >
-            Forgot password?
-          </a>
+          <div class="input-wrapper">
+
+            <span class="input-icon">
+              @
+            </span>
+
+            <input
+              id="email"
+              type="email"
+              name="email"
+              [(ngModel)]="email"
+              placeholder="Enter your email"
+              autocomplete="email"
+              required
+            />
+
+          </div>
 
         </div>
 
 
-        <div class="password-wrapper">
+        <!-- PASSWORD -->
 
-          <input
-            id="password"
-            [type]="showPassword ? 'text' : 'password'"
-            name="password"
-            [(ngModel)]="password"
-            placeholder="Enter your password"
-            autocomplete="current-password"
-            required
-          />
+        <div class="form-group">
 
-          <button
-            type="button"
-            class="eye-button"
-            (click)="togglePassword()"
-            [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
-          >
+          <div class="password-label-row">
 
-            @if (showPassword) {
-              <span>◉</span>
-            } @else {
-              <span>◉</span>
-            }
+            <label for="password">
+              Password
+            </label>
 
-          </button>
+            <a
+              routerLink="/forgot-password"
+              class="forgot-link"
+            >
+              Forgot password?
+            </a>
+
+          </div>
+
+
+          <div class="input-wrapper password-wrapper">
+
+            <span class="input-icon">
+              ●
+            </span>
+
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              name="password"
+              [(ngModel)]="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            />
+
+            <button
+              type="button"
+              class="password-toggle"
+              (click)="togglePassword()"
+              [attr.aria-label]="
+                showPassword
+                  ? 'Hide password'
+                  : 'Show password'
+              "
+            >
+
+              @if (showPassword) {
+                <span class="eye-icon">◉</span>
+              } @else {
+                <span class="eye-icon">◉</span>
+              }
+
+            </button>
+
+          </div>
 
         </div>
+
+
+        <!-- LOGIN BUTTON -->
+
+        <button
+          type="submit"
+          class="login-button"
+          [disabled]="isLoading"
+        >
+
+          @if (isLoading) {
+
+            <span class="spinner"></span>
+
+            <span>
+              Logging in...
+            </span>
+
+          } @else {
+
+            <span>
+              Login
+            </span>
+
+            <span class="button-arrow">
+              →
+            </span>
+
+          }
+
+        </button>
+
+      </form>
+
+
+      <!-- REGISTER -->
+
+      <div class="register-section">
+
+        <span>
+          Don't have an account?
+        </span>
+
+        <a routerLink="/register">
+          Create an account
+        </a>
 
       </div>
 
 
-      <!-- LOGIN BUTTON -->
-      <button
-        type="submit"
-        class="login-button"
-        [disabled]="isLoading"
-      >
+      <!-- SECURITY FOOTER -->
 
-        @if (isLoading) {
+      <div class="security-footer">
 
-          <span class="button-loader"></span>
+        <span class="lock-icon">
+          🔒
+        </span>
 
-          <span>
-            Logging in...
-          </span>
+        <span>
+          Secure authentication protected by SecureLogin
+        </span>
 
-        } @else {
+      </div>
 
-          <span>
-            Login
-          </span>
+    </section>
 
-          <span class="arrow">
-            →
-          </span>
-
-        }
-
-      </button>
-
-    </form>
+  </main>
 
 
-    <!-- REGISTER -->
-    <div class="register-section">
+  <!-- SUCCESS POPUP -->
 
-      <p>
-        Don't have an account?
-      </p>
-
-      <a
-        routerLink="/register"
-        class="register-button"
-      >
-        Create an account
-      </a>
-
-    </div>
-
-
-    <!-- SECURITY -->
-    <div class="security-note">
-
-      <span>🔒</span>
-
-      <span>
-        Secure authentication protected by SecureLogin
-      </span>
-
-    </div>
-
-  </div>
-
-
-  <!-- LOGIN SUCCESS POPUP -->
   @if (showSuccessPopup) {
 
     <div class="popup-overlay">
 
       <div class="success-popup">
 
-        <div class="success-icon">
+        <div class="popup-icon">
           ✓
         </div>
 
         <div class="popup-content">
 
-          <span class="popup-label">
-            SUCCESS
+          <span class="popup-eyebrow">
+            AUTHENTICATION COMPLETE
           </span>
 
           <h2>
@@ -225,15 +278,14 @@
           </h2>
 
           <p>
-            You have successfully logged in to your
-            SecureLogin account.
+            You have successfully logged in to your SecureLogin account.
           </p>
 
         </div>
 
         <button
           type="button"
-          class="continue-button"
+          class="popup-button"
           (click)="continueAfterLogin()"
         >
           Continue

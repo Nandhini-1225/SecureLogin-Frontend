@@ -24,25 +24,11 @@ import { AuthService } from '../../services/auth';
 })
 export class Login {
 
-  // ==============================
-  // FORM FIELDS
-  // ==============================
-
   email = '';
   password = '';
 
-
-  // ==============================
-  // MESSAGES
-  // ==============================
-
   message = '';
   errorMessage = '';
-
-
-  // ==============================
-  // UI STATE
-  // ==============================
 
   isLoading = false;
 
@@ -50,21 +36,15 @@ export class Login {
 
   showPassword = false;
 
-
-  // ==============================
-  // CONSTRUCTOR
-  // ==============================
-
   constructor(
     private authService: AuthService,
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef
   ) {}
 
-
-  // ==============================
+  // ==========================================
   // LOGIN
-  // ==============================
+  // ==========================================
 
   login(): void {
 
@@ -72,15 +52,10 @@ export class Login {
     this.errorMessage = '';
     this.showSuccessPopup = false;
 
-    // ==============================
-    // VALIDATION
-    // ==============================
-
     if (
       !this.email.trim() ||
       !this.password
     ) {
-
       this.errorMessage =
         'Email and password are required.';
 
@@ -89,37 +64,17 @@ export class Login {
       return;
     }
 
-
-    // ==============================
-    // START LOADING
-    // ==============================
-
     this.isLoading = true;
 
     this.changeDetectorRef.detectChanges();
 
-
-    console.log(
-      '================================='
-    );
-
-    console.log(
-      'LOGIN REQUEST STARTED'
-    );
-
+    console.log('=================================');
+    console.log('LOGIN REQUEST STARTED');
     console.log(
       'Email:',
       this.email.trim()
     );
-
-    console.log(
-      '================================='
-    );
-
-
-    // ==============================
-    // API REQUEST
-    // ==============================
+    console.log('=================================');
 
     this.authService
       .login(
@@ -128,42 +83,18 @@ export class Login {
       )
       .subscribe({
 
-        // ==========================
-        // SUCCESS
-        // ==========================
-
         next: (response) => {
 
-          console.log(
-            '================================='
-          );
+          console.log('=================================');
+          console.log('LOGIN SUCCESS');
+          console.log('Server response:', response);
+          console.log('=================================');
 
-          console.log(
-            'LOGIN SUCCESS'
-          );
-
-          console.log(
-            'Server response:',
-            response
-          );
-
-          console.log(
-            '================================='
-          );
-
-
-          // Stop loading
           this.isLoading = false;
-
-
-          // ==========================
-          // GET JWT
-          // ==========================
 
           const token =
             response?.token ||
             response?.accessToken;
-
 
           if (token) {
 
@@ -183,21 +114,12 @@ export class Login {
             );
           }
 
-
-          // ==========================
-          // SUCCESS MESSAGE
-          // ==========================
-
           this.message =
             'You have successfully logged in!';
 
-
-          // ==========================
-          // SHOW POPUP
-          // ==========================
-
           this.showSuccessPopup = true;
 
+          this.changeDetectorRef.detectChanges();
 
           console.log(
             'Login success message:',
@@ -213,56 +135,18 @@ export class Login {
             'Loading:',
             this.isLoading
           );
-
-
-          // ==========================
-          // FORCE UI UPDATE
-          // ==========================
-
-          this.changeDetectorRef.detectChanges();
-
         },
-
-
-        // ==========================
-        // ERROR
-        // ==========================
 
         error: (error) => {
 
-          console.error(
-            '================================='
-          );
+          console.error('=================================');
+          console.error('LOGIN FAILED');
+          console.error('Status:', error.status);
+          console.error('Response:', error.error);
+          console.error('=================================');
 
-          console.error(
-            'LOGIN FAILED'
-          );
-
-          console.error(
-            'Status:',
-            error.status
-          );
-
-          console.error(
-            'Response:',
-            error.error
-          );
-
-          console.error(
-            '================================='
-          );
-
-
-          // Stop loading
           this.isLoading = false;
-
-          // Close success popup
           this.showSuccessPopup = false;
-
-
-          // ==========================
-          // 401
-          // ==========================
 
           if (error.status === 401) {
 
@@ -275,11 +159,6 @@ export class Login {
             return;
           }
 
-
-          // ==========================
-          // 429
-          // ==========================
-
           if (error.status === 429) {
 
             this.errorMessage =
@@ -289,11 +168,6 @@ export class Login {
 
             return;
           }
-
-
-          // ==========================
-          // 400
-          // ==========================
 
           if (error.status === 400) {
 
@@ -306,11 +180,6 @@ export class Login {
             return;
           }
 
-
-          // ==========================
-          // 403
-          // ==========================
-
           if (error.status === 403) {
 
             this.errorMessage =
@@ -322,11 +191,6 @@ export class Login {
             return;
           }
 
-
-          // ==========================
-          // 500+
-          // ==========================
-
           if (error.status >= 500) {
 
             this.errorMessage =
@@ -337,25 +201,17 @@ export class Login {
             return;
           }
 
-
-          // ==========================
-          // CONNECTION ERROR
-          // ==========================
-
           this.errorMessage =
             'Unable to connect to the server.';
 
           this.changeDetectorRef.detectChanges();
-
         }
-
       });
   }
 
-
-  // ==============================
+  // ==========================================
   // SHOW / HIDE PASSWORD
-  // ==============================
+  // ==========================================
 
   togglePassword(): void {
 
@@ -365,10 +221,9 @@ export class Login {
     this.changeDetectorRef.detectChanges();
   }
 
-
-  // ==============================
+  // ==========================================
   // CONTINUE AFTER LOGIN
-  // ==============================
+  // ==========================================
 
   continueAfterLogin(): void {
 

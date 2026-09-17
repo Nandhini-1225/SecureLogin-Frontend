@@ -1,28 +1,32 @@
 <div class="register-page">
 
-  <div class="background-shape shape-one"></div>
-  <div class="background-shape shape-two"></div>
+  <!-- BACKGROUND GLOW -->
 
-  <div class="register-card">
+  <div class="background-glow glow-one"></div>
+  <div class="background-glow glow-two"></div>
+
+
+  <!-- MAIN CONTAINER -->
+
+  <main class="auth-container">
+
 
     <!-- BRAND -->
 
-    <div class="brand">
+    <div class="brand-section">
 
-      <div class="angular-logo">
-
-        <span></span>
-
+      <div class="brand-mark">
+        SL
       </div>
 
-      <div class="brand-text">
+      <div>
 
         <h1>
-          SecureLogin
+          Secure<span>Login</span>
         </h1>
 
         <p>
-          Secure authentication system
+          Secure access to your account
         </p>
 
       </div>
@@ -30,259 +34,311 @@
     </div>
 
 
-    <!-- HEADING -->
+    <!-- REGISTER CARD -->
 
-    <div class="welcome-section">
-
-      <h2>
-        Create your account
-      </h2>
-
-      <p>
-        Set up your secure SecureLogin account.
-      </p>
-
-    </div>
+    <section class="register-card">
 
 
-    <!-- MESSAGE -->
+      <!-- HEADER -->
 
-    @if (message) {
+      <div class="card-header">
 
-      <div class="message success-message">
-
-        <div class="message-icon">
-          ✓
-        </div>
-
-        <span>
-          {{ message }}
+        <span class="eyebrow">
+          GET STARTED
         </span>
 
-      </div>
+        <h2>
+          Create your account
+        </h2>
 
-    }
-
-
-    @if (errorMessage) {
-
-      <div class="message error-message">
-
-        <div class="message-icon">
-          !
-        </div>
-
-        <span>
-          {{ errorMessage }}
-        </span>
-
-      </div>
-
-    }
-
-
-    <!-- FORM -->
-
-    <form
-      class="register-form"
-      (ngSubmit)="register()"
-      autocomplete="on"
-    >
-
-
-      <!-- NAMES -->
-
-      <div class="name-row">
-
-        <div class="form-group">
-
-          <label for="firstName">
-            First name
-          </label>
-
-          <input
-            id="firstName"
-            type="text"
-            name="firstName"
-            [(ngModel)]="firstName"
-            placeholder="First name"
-            autocomplete="given-name"
-            required
-          />
-
-        </div>
-
-
-        <div class="form-group">
-
-          <label for="lastName">
-            Last name
-          </label>
-
-          <input
-            id="lastName"
-            type="text"
-            name="lastName"
-            [(ngModel)]="lastName"
-            placeholder="Last name"
-            autocomplete="family-name"
-            required
-          />
-
-        </div>
+        <p>
+          Join SecureLogin and protect your account with secure authentication.
+        </p>
 
       </div>
 
 
-      <!-- EMAIL -->
+      <!-- SUCCESS MESSAGE -->
 
-      <div class="form-group">
+      @if (message) {
 
-        <label for="email">
-          Email address
-        </label>
+        <div class="inline-success">
 
-        <div class="input-wrapper">
-
-          <span class="input-icon">
-            @
-          </span>
-
-          <input
-            id="email"
-            type="email"
-            name="email"
-            [(ngModel)]="email"
-            placeholder="Enter your email"
-            autocomplete="email"
-            required
-          />
-
-        </div>
-
-      </div>
-
-
-      <!-- PASSWORD -->
-
-      <div class="form-group">
-
-        <label for="password">
-          Password
-        </label>
-
-        <div class="input-wrapper">
-
-          <span class="input-icon">
-            •
-          </span>
-
-          <input
-            id="password"
-            type="password"
-            name="password"
-            [(ngModel)]="password"
-            placeholder="Create a strong password"
-            autocomplete="new-password"
-            required
-          />
-
-        </div>
-
-
-        <div class="password-hint">
-
-          <strong>
-            Password requirements
-          </strong>
-
-          <span>
-            • Minimum 12 characters
+          <span class="message-icon">
+            ✓
           </span>
 
           <span>
-            • Uppercase and lowercase letters
-          </span>
-
-          <span>
-            • At least one number
-          </span>
-
-          <span>
-            • At least one special character
+            {{ message }}
           </span>
 
         </div>
 
-      </div>
+      }
 
 
-      <!-- REGISTER BUTTON -->
+      <!-- ERROR MESSAGE -->
 
-      <button
-        type="submit"
-        class="register-button"
-        [disabled]="isLoading"
+      @if (errorMessage) {
+
+        <div class="inline-error">
+
+          <span class="message-icon">
+            !
+          </span>
+
+          <span>
+            {{ errorMessage }}
+          </span>
+
+        </div>
+
+      }
+
+
+      <!-- REGISTER FORM -->
+
+      <form
+        (ngSubmit)="register()"
+        autocomplete="on"
       >
 
-        @if (isLoading) {
 
-          <span class="button-loader"></span>
+        <!-- NAME ROW -->
 
-          <span>
-            Creating account...
-          </span>
-
-        } @else {
-
-          <span>
-            Create Account
-          </span>
-
-          <span class="button-arrow">
-            →
-          </span>
-
-        }
-
-      </button>
-
-    </form>
+        <div class="name-row">
 
 
-    <!-- LOGIN LINK -->
+          <!-- FIRST NAME -->
 
-    <div class="login-section">
+          <div class="form-group">
 
-      <span>
-        Already have an account?
-      </span>
+            <label for="firstName">
+              First name
+            </label>
 
-      <a routerLink="/login">
-        Login
-      </a>
+            <div class="input-wrapper">
 
-    </div>
+              <span class="input-icon">
+                ◉
+              </span>
 
+              <input
+                id="firstName"
+                type="text"
+                name="firstName"
+                [(ngModel)]="firstName"
+                placeholder="First name"
+                autocomplete="given-name"
+                required
+              />
 
-    <!-- SECURITY -->
+            </div>
 
-    <div class="security-note">
-
-      <span class="shield">
-        ◈
-      </span>
-
-      <span>
-        Your information is protected by SecureLogin.
-      </span>
-
-    </div>
-
-  </div>
+          </div>
 
 
-  <!-- REGISTRATION SUCCESS POPUP -->
+          <!-- LAST NAME -->
+
+          <div class="form-group">
+
+            <label for="lastName">
+              Last name
+            </label>
+
+            <div class="input-wrapper">
+
+              <span class="input-icon">
+                ◉
+              </span>
+
+              <input
+                id="lastName"
+                type="text"
+                name="lastName"
+                [(ngModel)]="lastName"
+                placeholder="Last name"
+                autocomplete="family-name"
+                required
+              />
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- EMAIL -->
+
+        <div class="form-group">
+
+          <label for="email">
+            Email address
+          </label>
+
+          <div class="input-wrapper">
+
+            <span class="input-icon">
+              @
+            </span>
+
+            <input
+              id="email"
+              type="email"
+              name="email"
+              [(ngModel)]="email"
+              placeholder="Enter your email"
+              autocomplete="email"
+              required
+            />
+
+          </div>
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+          <label for="password">
+            Password
+          </label>
+
+          <div class="input-wrapper password-wrapper">
+
+            <span class="input-icon">
+              ●
+            </span>
+
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              name="password"
+              [(ngModel)]="password"
+              placeholder="Create a strong password"
+              autocomplete="new-password"
+              required
+            />
+
+            <button
+              type="button"
+              class="password-toggle"
+              (click)="togglePassword()"
+              [attr.aria-label]="
+                showPassword
+                  ? 'Hide password'
+                  : 'Show password'
+              "
+            >
+              <span class="eye-icon">
+                ◉
+              </span>
+            </button>
+
+          </div>
+
+
+          <!-- PASSWORD REQUIREMENTS -->
+
+          <div class="password-requirements">
+
+            <span class="requirements-title">
+              Password requirements
+            </span>
+
+            <span>
+              • Minimum 12 characters
+            </span>
+
+            <span>
+              • Uppercase and lowercase letters
+            </span>
+
+            <span>
+              • At least one number
+            </span>
+
+            <span>
+              • At least one special character
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- CREATE ACCOUNT -->
+
+        <button
+          type="submit"
+          class="register-button"
+          [disabled]="isLoading"
+        >
+
+          @if (isLoading) {
+
+            <span class="spinner"></span>
+
+            <span>
+              Creating account...
+            </span>
+
+          } @else {
+
+            <span>
+              Create Account
+            </span>
+
+            <span class="button-arrow">
+              →
+            </span>
+
+          }
+
+        </button>
+
+      </form>
+
+
+      <!-- LOGIN LINK -->
+
+      <div class="login-section">
+
+        <span>
+          Already have an account?
+        </span>
+
+        <a routerLink="/login">
+          Sign in
+        </a>
+
+      </div>
+
+
+      <!-- SECURITY FOOTER -->
+
+      <div class="security-footer">
+
+        <span class="lock-icon">
+          🔒
+        </span>
+
+        <span>
+          Secure authentication protected by SecureLogin
+        </span>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ==========================================
+       REGISTRATION SUCCESS POPUP
+       ========================================== -->
 
   @if (showSuccessPopup) {
 
@@ -290,91 +346,54 @@
 
       <div class="success-popup">
 
-        <div class="success-icon">
+
+        <!-- SUCCESS ICON -->
+
+        <div class="popup-icon">
           ✓
         </div>
 
-        <p class="popup-label">
-          ACCOUNT CREATED
-        </p>
 
-        <h2>
-          Registration Successful!
-        </h2>
+        <!-- POPUP CONTENT -->
 
-        <p class="popup-description">
-          Your SecureLogin account has been created successfully.
-        </p>
+        <div class="popup-content">
 
-        <p class="verification-text">
-          Please check your email and verify your account
-          before logging in.
-        </p>
+          <span class="popup-eyebrow">
+            ACCOUNT CREATED
+          </span>
+
+          <h2>
+            Registration Successful!
+          </h2>
+
+          <p>
+            Your SecureLogin account has been created successfully.
+          </p>
+
+          <p class="verification-message">
+            Please check your email and verify your account before logging in.
+          </p>
+
+        </div>
+
+
+        <!-- GO TO LOGIN -->
 
         <button
           type="button"
-          class="continue-button"
+          class="popup-button"
           (click)="goToLogin()"
         >
-          Go to Login
-          <span>→</span>
+
+          <span>
+            Go to Login
+          </span>
+
+          <span>
+            →
+          </span>
+
         </button>
-
-      </div>
-
-    </div>
-
-  }
-
-
-  <!-- ALREADY REGISTERED POPUP -->
-
-  @if (showAlreadyRegisteredPopup) {
-
-    <div class="popup-overlay">
-
-      <div class="already-registered-popup">
-
-        <div class="warning-icon">
-          !
-        </div>
-
-        <p class="popup-label warning-label">
-          ACCOUNT EXISTS
-        </p>
-
-        <h2>
-          Already Registered
-        </h2>
-
-        <p class="popup-description">
-          An account with this email address already exists.
-        </p>
-
-        <p class="verification-text">
-          Please use the login page to access your account.
-        </p>
-
-        <div class="popup-buttons">
-
-          <button
-            type="button"
-            class="close-button"
-            (click)="closeAlreadyRegisteredPopup()"
-          >
-            Close
-          </button>
-
-          <button
-            type="button"
-            class="continue-button"
-            (click)="goToLogin()"
-          >
-            Login
-            <span>→</span>
-          </button>
-
-        </div>
 
       </div>
 
