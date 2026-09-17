@@ -1,49 +1,81 @@
 <div class="login-page">
 
-  <div class="background-glow glow-one"></div>
-  <div class="background-glow glow-two"></div>
+  <div class="background-shape shape-one"></div>
+  <div class="background-shape shape-two"></div>
 
   <div class="login-card">
 
+    <!-- BRAND -->
     <div class="brand">
-      <div class="brand-icon">
-        🔐
+
+      <div class="angular-logo">
+        <span></span>
       </div>
 
-      <div>
+      <div class="brand-text">
         <h1>SecureLogin</h1>
-        <p>Secure access to your account</p>
+        <p>Secure authentication system</p>
       </div>
+
     </div>
 
+
+    <!-- HEADING -->
     <div class="welcome-section">
+
       <h2>Welcome back</h2>
 
       <p>
-        Sign in to continue to your account.
+        Sign in securely to continue.
       </p>
+
     </div>
 
+
+    <!-- SUCCESS MESSAGE -->
     @if (message) {
+
       <div class="message success-message">
-        <span class="message-icon">✓</span>
-        <span>{{ message }}</span>
+
+        <div class="message-icon">
+          ✓
+        </div>
+
+        <span>
+          {{ message }}
+        </span>
+
       </div>
+
     }
 
+
+    <!-- ERROR MESSAGE -->
     @if (errorMessage) {
+
       <div class="message error-message">
-        <span class="message-icon">!</span>
-        <span>{{ errorMessage }}</span>
+
+        <div class="message-icon">
+          !
+        </div>
+
+        <span>
+          {{ errorMessage }}
+        </span>
+
       </div>
+
     }
 
+
+    <!-- LOGIN FORM -->
     <form
-      (ngSubmit)="login()"
       class="login-form"
+      (ngSubmit)="login()"
       autocomplete="on"
     >
 
+      <!-- EMAIL -->
       <div class="form-group">
 
         <label for="email">
@@ -53,7 +85,7 @@
         <div class="input-wrapper">
 
           <span class="input-icon">
-            ✉
+            @
           </span>
 
           <input
@@ -61,7 +93,7 @@
             type="email"
             name="email"
             [(ngModel)]="email"
-            placeholder="you@example.com"
+            placeholder="Enter your email"
             autocomplete="email"
             required
           />
@@ -70,27 +102,18 @@
 
       </div>
 
+
+      <!-- PASSWORD -->
       <div class="form-group">
 
-        <div class="password-label-row">
-
-          <label for="password">
-            Password
-          </label>
-
-          <a
-            routerLink="/forgot-password"
-            class="forgot-link"
-          >
-            Forgot password?
-          </a>
-
-        </div>
+        <label for="password">
+          Password
+        </label>
 
         <div class="input-wrapper">
 
           <span class="input-icon">
-            🔒
+            •
           </span>
 
           <input
@@ -107,6 +130,8 @@
 
       </div>
 
+
+      <!-- LOGIN BUTTON -->
       <button
         type="submit"
         class="login-button"
@@ -114,36 +139,61 @@
       >
 
         @if (isLoading) {
+
           <span class="button-loader"></span>
-          <span>Signing in...</span>
+
+          <span>
+            Signing in...
+          </span>
+
         } @else {
-          <span>Sign in</span>
-          <span class="button-arrow">→</span>
+
+          <span>
+            Sign In
+          </span>
+
+          <span class="button-arrow">
+            →
+          </span>
+
         }
 
       </button>
 
     </form>
 
-    <div class="divider">
-      <span>New to SecureLogin?</span>
+
+    <!-- REGISTER -->
+    <div class="register-section">
+
+      <span>
+        Don't have an account?
+      </span>
+
+      <a routerLink="/register">
+        Create account
+      </a>
+
     </div>
 
-    <a
-      routerLink="/register"
-      class="create-account-button"
-    >
-      Create an account
-    </a>
 
-    <p class="security-note">
-      <span>🛡</span>
-      Your connection is protected by secure authentication.
-    </p>
+    <!-- SECURITY -->
+    <div class="security-note">
+
+      <span class="shield">
+        ◈
+      </span>
+
+      <span>
+        Protected by SecureLogin authentication
+      </span>
+
+    </div>
 
   </div>
 
 
+  <!-- LOGIN SUCCESS POPUP -->
   @if (showSuccessPopup) {
 
     <div class="popup-overlay">
@@ -154,21 +204,18 @@
           ✓
         </div>
 
-        <div class="success-content">
+        <p class="popup-label">
+          AUTHENTICATION SUCCESSFUL
+        </p>
 
-          <p class="popup-label">
-            AUTHENTICATION COMPLETE
-          </p>
+        <h2>
+          Login Successful!
+        </h2>
 
-          <h2>
-            Login Successful
-          </h2>
-
-          <p>
-            You have successfully signed in to your SecureLogin account.
-          </p>
-
-        </div>
+        <p class="popup-description">
+          You have successfully logged in to your
+          SecureLogin account.
+        </p>
 
         <button
           type="button"

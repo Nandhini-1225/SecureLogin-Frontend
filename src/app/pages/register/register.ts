@@ -45,6 +45,9 @@ export class Register {
     this.showSuccessPopup = false;
     this.showAlreadyRegisteredPopup = false;
 
+
+    /* VALIDATION */
+
     if (
       !this.firstName.trim() ||
       !this.lastName.trim() ||
@@ -58,11 +61,27 @@ export class Register {
       return;
     }
 
+
     this.isLoading = true;
+
+
+    console.log(
+      '================================='
+    );
 
     console.log(
       'REGISTRATION REQUEST STARTED'
     );
+
+    console.log(
+      'Email:',
+      this.email.trim()
+    );
+
+    console.log(
+      '================================='
+    );
+
 
     this.authService
       .register(
@@ -73,34 +92,97 @@ export class Register {
       )
       .subscribe({
 
+        /* SUCCESS */
+
         next: (response) => {
 
           console.log(
-            'REGISTRATION SUCCESS',
+            'REGISTRATION SUCCESS'
+          );
+
+          console.log(
+            'Server response:',
             response
           );
 
+
           this.isLoading = false;
+
 
           this.message =
             'Registration successful!';
 
+
+          /*
+           * SHOW SUCCESS POPUP
+           */
+
           this.showSuccessPopup = true;
+
+
+          /*
+           * CLEAR FORM
+           */
 
           this.firstName = '';
           this.lastName = '';
           this.email = '';
           this.password = '';
+
+
+          /*
+           * AUTOMATIC REDIRECT
+           *
+           * User still has time to see
+           * the successful registration popup.
+           */
+
+          setTimeout(() => {
+
+            if (this.showSuccessPopup) {
+
+              this.goToLogin();
+
+            }
+
+          }, 4000);
+
         },
+
+
+        /* ERROR */
 
         error: (error) => {
 
           console.error(
-            'REGISTRATION FAILED',
-            error
+            '================================='
           );
 
+          console.error(
+            'REGISTRATION FAILED'
+          );
+
+          console.error(
+            'Status:',
+            error.status
+          );
+
+          console.error(
+            'Response:',
+            error.error
+          );
+
+          console.error(
+            '================================='
+          );
+
+
           this.isLoading = false;
+
+
+          /*
+           * ALREADY REGISTERED
+           */
 
           if (error.status === 409) {
 
@@ -113,6 +195,11 @@ export class Register {
             return;
           }
 
+
+          /*
+           * BAD REQUEST
+           */
+
           if (error.status === 400) {
 
             this.errorMessage =
@@ -122,6 +209,11 @@ export class Register {
             return;
           }
 
+
+          /*
+           * RATE LIMIT
+           */
+
           if (error.status === 429) {
 
             this.errorMessage =
@@ -129,6 +221,11 @@ export class Register {
 
             return;
           }
+
+
+          /*
+           * SERVER ERROR
+           */
 
           if (error.status >= 500) {
 
@@ -138,24 +235,46 @@ export class Register {
             return;
           }
 
+
+          /*
+           * OTHER ERROR
+           */
+
           this.errorMessage =
             'Unable to connect to the server.';
+
         }
+
       });
   }
 
 
+  /*
+   * GO TO LOGIN
+   */
+
   goToLogin(): void {
 
     this.showSuccessPopup = false;
+
     this.showAlreadyRegisteredPopup = false;
 
-    this.router.navigate(['/login']);
+    this.router.navigate([
+      '/login'
+    ]);
+
   }
 
+
+  /*
+   * CLOSE ALREADY REGISTERED POPUP
+   */
 
   closeAlreadyRegisteredPopup(): void {
 
-    this.showAlreadyRegisteredPopup = false;
+    this.showAlreadyRegisteredPopup =
+      false;
+
   }
+
 }

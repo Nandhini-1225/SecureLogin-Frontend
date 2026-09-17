@@ -43,15 +43,32 @@ export class Login {
       !this.email.trim() ||
       !this.password
     ) {
+
       this.errorMessage =
         'Email and password are required.';
+
       return;
     }
 
     this.isLoading = true;
 
-    console.log('LOGIN REQUEST STARTED');
-    console.log('Email:', this.email.trim());
+    console.log(
+      '================================='
+    );
+
+    console.log(
+      'LOGIN REQUEST STARTED'
+    );
+
+    console.log(
+      'Email:',
+      this.email.trim()
+    );
+
+    console.log(
+      '================================='
+    );
+
 
     this.authService
       .login(
@@ -63,15 +80,21 @@ export class Login {
         next: (response) => {
 
           console.log(
-            'LOGIN SUCCESS',
+            'LOGIN SUCCESS'
+          );
+
+          console.log(
+            'Server response:',
             response
           );
 
           this.isLoading = false;
 
+
           const token =
             response?.token ||
             response?.accessToken;
+
 
           if (token) {
 
@@ -89,23 +112,47 @@ export class Login {
             console.warn(
               'Login succeeded, but no JWT token was found.'
             );
+
           }
+
 
           this.message =
             'You have successfully logged in!';
 
           this.showSuccessPopup = true;
+
         },
+
 
         error: (error) => {
 
           console.error(
-            'LOGIN FAILED',
-            error
+            '================================='
           );
 
+          console.error(
+            'LOGIN FAILED'
+          );
+
+          console.error(
+            'Status:',
+            error.status
+          );
+
+          console.error(
+            'Response:',
+            error.error
+          );
+
+          console.error(
+            '================================='
+          );
+
+
           this.isLoading = false;
+
           this.showSuccessPopup = false;
+
 
           if (error.status === 401) {
 
@@ -116,6 +163,7 @@ export class Login {
             return;
           }
 
+
           if (error.status === 429) {
 
             this.errorMessage =
@@ -123,6 +171,7 @@ export class Login {
 
             return;
           }
+
 
           if (error.status === 400) {
 
@@ -133,6 +182,7 @@ export class Login {
             return;
           }
 
+
           if (error.status >= 500) {
 
             this.errorMessage =
@@ -141,17 +191,26 @@ export class Login {
             return;
           }
 
+
           this.errorMessage =
             'Unable to connect to the server.';
+
         }
+
       });
   }
 
 
   continueAfterLogin(): void {
 
+    console.log(
+      'Continue button clicked.'
+    );
+
     this.showSuccessPopup = false;
 
     this.router.navigate(['/']);
+
   }
+
 }
