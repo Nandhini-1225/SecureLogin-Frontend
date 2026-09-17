@@ -16,10 +16,12 @@ import { AuthService } from '../../services/auth';
 @Component({
   selector: 'app-login',
   standalone: true,
+
   imports: [
     FormsModule,
     RouterLink
   ],
+
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
@@ -27,6 +29,8 @@ export class Login {
 
   email = '';
   password = '';
+
+  showPassword = false;
 
   message = '';
   errorMessage = '';
@@ -48,11 +52,8 @@ export class Login {
 
   login(): void {
 
-    // Clear previous messages
     this.message = '';
     this.errorMessage = '';
-
-    // Close any previous popup
     this.showSuccessPopup = false;
 
 
@@ -67,6 +68,22 @@ export class Login {
 
       this.errorMessage =
         'Email and password are required.';
+
+      return;
+    }
+
+
+    // ========================================================
+    // EMAIL VALIDATION
+    // ========================================================
+
+    const emailPattern =
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailPattern.test(this.email.trim())) {
+
+      this.errorMessage =
+        'Please enter a valid email address.';
 
       return;
     }
@@ -123,7 +140,6 @@ export class Login {
           );
 
 
-          // Stop loading
           this.isLoading = false;
 
 
@@ -143,13 +159,11 @@ export class Login {
               token
             );
 
-
             console.log(
               'JWT stored successfully.'
             );
 
-          }
-          else {
+          } else {
 
             console.warn(
               'Login succeeded, but no JWT token was found in the response.'
@@ -174,7 +188,7 @@ export class Login {
 
 
           // ==================================================
-          // FORCE ANGULAR UI UPDATE
+          // FORCE UI UPDATE
           // ==================================================
 
           this.changeDetectorRef.detectChanges();
@@ -227,11 +241,8 @@ export class Login {
           );
 
 
-          // Stop loading
           this.isLoading = false;
 
-
-          // Make sure success popup is closed
           this.showSuccessPopup = false;
 
 
@@ -244,7 +255,6 @@ export class Login {
             this.errorMessage =
               error.error?.message ||
               'Invalid email or password, or email is not verified.';
-
 
             this.changeDetectorRef.detectChanges();
 
@@ -260,7 +270,6 @@ export class Login {
 
             this.errorMessage =
               'Too many login attempts. Please try again later.';
-
 
             this.changeDetectorRef.detectChanges();
 
@@ -278,7 +287,6 @@ export class Login {
               error.error?.message ||
               'Please check the information you entered.';
 
-
             this.changeDetectorRef.detectChanges();
 
             return;
@@ -294,7 +302,6 @@ export class Login {
             this.errorMessage =
               'Server error. Please try again later.';
 
-
             this.changeDetectorRef.detectChanges();
 
             return;
@@ -302,12 +309,11 @@ export class Login {
 
 
           // ==================================================
-          // UNKNOWN / CONNECTION ERROR
+          // CONNECTION ERROR
           // ==================================================
 
           this.errorMessage =
             'Unable to connect to the server.';
-
 
           this.changeDetectorRef.detectChanges();
 
@@ -329,11 +335,9 @@ export class Login {
     );
 
 
-    // Hide popup
     this.showSuccessPopup = false;
 
 
-    // Navigate to home
     this.router.navigate(['/']);
 
   }
