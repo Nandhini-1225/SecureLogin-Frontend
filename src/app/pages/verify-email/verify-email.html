@@ -1,0 +1,32 @@
+<div class="verify-container">
+
+  <div class="verify-card">
+
+    @if (isLoading) {
+      <div class="loader"></div>
+      <h2>Verifying your email...</h2>
+      <p>Please wait.</p>
+    }
+
+    @if (!isLoading && isSuccess) {
+      <div class="success-icon">✓</div>
+      <h2>Email Verified!</h2>
+      <p>{{ message }}</p>
+      <p class="redirect-text">
+        Redirecting you to the login page...
+      </p>
+    }
+
+    @if (!isLoading && !isSuccess) {
+      <div class="error-icon">!</div>
+      <h2>Verification Failed</h2>
+      <p>{{ message }}</p>
+
+      <button type="button" (click)="router.navigate(['/login'])">
+        Go to Login
+      </button>
+    }
+
+  </div>
+
+</div>

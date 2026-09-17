@@ -45,4 +45,13 @@ export class AuthService {
       }
     );
   }
+
+  verifyEmail(
+    token: string
+  ): Observable<any> {
+
+    return this.http.get(
+      `${this.apiUrl}/verify-email?token=${encodeURIComponent(token)}`
+    );
+  }
 }
