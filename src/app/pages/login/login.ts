@@ -19,25 +19,60 @@ import { AuthService } from '../../services/auth';
 })
 export class Login {
 
+  // ==============================
+  // FORM FIELDS
+  // ==============================
+
   email = '';
   password = '';
+
+
+  // ==============================
+  // MESSAGES
+  // ==============================
 
   message = '';
   errorMessage = '';
 
+
+  // ==============================
+  // UI STATE
+  // ==============================
+
   isLoading = false;
+
   showSuccessPopup = false;
+
+  showPassword = false;
+
+
+  // ==============================
+  // CONSTRUCTOR
+  // ==============================
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) {}
 
+
+  // ==============================
+  // LOGIN
+  // ==============================
+
   login(): void {
 
+    // Clear previous messages
     this.message = '';
     this.errorMessage = '';
+
+    // Close popup if it was previously open
     this.showSuccessPopup = false;
+
+
+    // ==============================
+    // BASIC VALIDATION
+    // ==============================
 
     if (
       !this.email.trim() ||
@@ -50,7 +85,13 @@ export class Login {
       return;
     }
 
+
+    // ==============================
+    // START LOADING
+    // ==============================
+
     this.isLoading = true;
+
 
     console.log(
       '================================='
@@ -70,6 +111,10 @@ export class Login {
     );
 
 
+    // ==============================
+    // SEND LOGIN REQUEST
+    // ==============================
+
     this.authService
       .login(
         this.email.trim(),
@@ -77,7 +122,15 @@ export class Login {
       )
       .subscribe({
 
+        // ==========================
+        // SUCCESS
+        // ==========================
+
         next: (response) => {
+
+          console.log(
+            '================================='
+          );
 
           console.log(
             'LOGIN SUCCESS'
@@ -88,8 +141,18 @@ export class Login {
             response
           );
 
+          console.log(
+            '================================='
+          );
+
+
+          // Stop loading
           this.isLoading = false;
 
+
+          // ==========================
+          // GET JWT TOKEN
+          // ==========================
 
           const token =
             response?.token ||
@@ -110,19 +173,46 @@ export class Login {
           } else {
 
             console.warn(
-              'Login succeeded, but no JWT token was found.'
+              'Login succeeded, but no JWT token was found in the response.'
             );
-
           }
 
+
+          // ==========================
+          // SUCCESS MESSAGE
+          // ==========================
 
           this.message =
             'You have successfully logged in!';
 
+
+          // ==========================
+          // SHOW SUCCESS POPUP
+          // ==========================
+
           this.showSuccessPopup = true;
 
+
+          console.log(
+            'Login success message:',
+            this.message
+          );
+
+          console.log(
+            'Success popup:',
+            this.showSuccessPopup
+          );
+
+          console.log(
+            'Loading:',
+            this.isLoading
+          );
         },
 
+
+        // ==========================
+        // ERROR
+        // ==========================
 
         error: (error) => {
 
@@ -149,10 +239,16 @@ export class Login {
           );
 
 
+          // Stop loading
           this.isLoading = false;
 
+          // Make sure success popup is closed
           this.showSuccessPopup = false;
 
+
+          // ==========================
+          // 401 - UNAUTHORIZED
+          // ==========================
 
           if (error.status === 401) {
 
@@ -164,6 +260,10 @@ export class Login {
           }
 
 
+          // ==========================
+          // 429 - RATE LIMITED
+          // ==========================
+
           if (error.status === 429) {
 
             this.errorMessage =
@@ -172,6 +272,10 @@ export class Login {
             return;
           }
 
+
+          // ==========================
+          // 400 - BAD REQUEST
+          // ==========================
 
           if (error.status === 400) {
 
@@ -183,6 +287,24 @@ export class Login {
           }
 
 
+          // ==========================
+          // 403 - FORBIDDEN
+          // ==========================
+
+          if (error.status === 403) {
+
+            this.errorMessage =
+              error.error?.message ||
+              'Access denied. Please verify your account.';
+
+            return;
+          }
+
+
+          // ==========================
+          // 500+ - SERVER ERROR
+          // ==========================
+
           if (error.status >= 500) {
 
             this.errorMessage =
@@ -192,14 +314,32 @@ export class Login {
           }
 
 
+          // ==========================
+          // CONNECTION ERROR
+          // ==========================
+
           this.errorMessage =
             'Unable to connect to the server.';
-
         }
 
       });
   }
 
+
+  // ==============================
+  // SHOW / HIDE PASSWORD
+  // ==============================
+
+  togglePassword(): void {
+
+    this.showPassword =
+      !this.showPassword;
+  }
+
+
+  // ==============================
+  // CONTINUE AFTER LOGIN
+  // ==============================
 
   continueAfterLogin(): void {
 
@@ -207,10 +347,13 @@ export class Login {
       'Continue button clicked.'
     );
 
+
+    // Close popup
     this.showSuccessPopup = false;
 
-    this.router.navigate(['/']);
 
+    // Navigate to home
+    this.router.navigate(['/']);
   }
 
 }

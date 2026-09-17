@@ -6,40 +6,35 @@
   <div class="login-card">
 
     <!-- BRAND -->
-    <div class="brand">
+    <div class="brand-section">
+      <h1>SecureLogin</h1>
 
-      <div class="angular-logo">
-        <span></span>
-      </div>
-
-      <div class="brand-text">
-        <h1>SecureLogin</h1>
-        <p>Secure authentication system</p>
-      </div>
-
+      <p>
+        Secure access to your account
+      </p>
     </div>
 
 
-    <!-- HEADING -->
+    <!-- WELCOME -->
     <div class="welcome-section">
 
       <h2>Welcome back</h2>
 
       <p>
-        Sign in securely to continue.
+        Sign in to continue to your account.
       </p>
 
     </div>
 
 
-    <!-- SUCCESS MESSAGE -->
+    <!-- SUCCESS / ERROR MESSAGE -->
     @if (message) {
 
       <div class="message success-message">
 
-        <div class="message-icon">
+        <span class="message-icon">
           ✓
-        </div>
+        </span>
 
         <span>
           {{ message }}
@@ -50,14 +45,13 @@
     }
 
 
-    <!-- ERROR MESSAGE -->
     @if (errorMessage) {
 
       <div class="message error-message">
 
-        <div class="message-icon">
+        <span class="message-icon">
           !
-        </div>
+        </span>
 
         <span>
           {{ errorMessage }}
@@ -82,23 +76,15 @@
           Email address
         </label>
 
-        <div class="input-wrapper">
-
-          <span class="input-icon">
-            @
-          </span>
-
-          <input
-            id="email"
-            type="email"
-            name="email"
-            [(ngModel)]="email"
-            placeholder="Enter your email"
-            autocomplete="email"
-            required
-          />
-
-        </div>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email"
+          autocomplete="email"
+          required
+        />
 
       </div>
 
@@ -106,25 +92,48 @@
       <!-- PASSWORD -->
       <div class="form-group">
 
-        <label for="password">
-          Password
-        </label>
+        <div class="password-header">
 
-        <div class="input-wrapper">
+          <label for="password">
+            Password
+          </label>
 
-          <span class="input-icon">
-            •
-          </span>
+          <a
+            routerLink="/forgot-password"
+            class="forgot-password"
+          >
+            Forgot password?
+          </a>
+
+        </div>
+
+
+        <div class="password-wrapper">
 
           <input
             id="password"
-            type="password"
+            [type]="showPassword ? 'text' : 'password'"
             name="password"
             [(ngModel)]="password"
             placeholder="Enter your password"
             autocomplete="current-password"
             required
           />
+
+          <button
+            type="button"
+            class="eye-button"
+            (click)="togglePassword()"
+            [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+          >
+
+            @if (showPassword) {
+              <span>◉</span>
+            } @else {
+              <span>◉</span>
+            }
+
+          </button>
 
         </div>
 
@@ -143,16 +152,16 @@
           <span class="button-loader"></span>
 
           <span>
-            Signing in...
+            Logging in...
           </span>
 
         } @else {
 
           <span>
-            Sign In
+            Login
           </span>
 
-          <span class="button-arrow">
+          <span class="arrow">
             →
           </span>
 
@@ -166,12 +175,15 @@
     <!-- REGISTER -->
     <div class="register-section">
 
-      <span>
+      <p>
         Don't have an account?
-      </span>
+      </p>
 
-      <a routerLink="/register">
-        Create account
+      <a
+        routerLink="/register"
+        class="register-button"
+      >
+        Create an account
       </a>
 
     </div>
@@ -180,12 +192,10 @@
     <!-- SECURITY -->
     <div class="security-note">
 
-      <span class="shield">
-        ◈
-      </span>
+      <span>🔒</span>
 
       <span>
-        Protected by SecureLogin authentication
+        Secure authentication protected by SecureLogin
       </span>
 
     </div>
@@ -204,18 +214,22 @@
           ✓
         </div>
 
-        <p class="popup-label">
-          AUTHENTICATION SUCCESSFUL
-        </p>
+        <div class="popup-content">
 
-        <h2>
-          Login Successful!
-        </h2>
+          <span class="popup-label">
+            SUCCESS
+          </span>
 
-        <p class="popup-description">
-          You have successfully logged in to your
-          SecureLogin account.
-        </p>
+          <h2>
+            Login Successful!
+          </h2>
+
+          <p>
+            You have successfully logged in to your
+            SecureLogin account.
+          </p>
+
+        </div>
 
         <button
           type="button"
