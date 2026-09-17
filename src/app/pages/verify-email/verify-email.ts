@@ -36,7 +36,7 @@ export class VerifyEmail implements OnInit {
         this.message = 'Email verified successfully!';
 
         setTimeout(() => {
-          this.router.navigate(['/login']);
+          this.goToLogin();
         }, 2000);
       },
       error: (error) => {
@@ -53,5 +53,9 @@ export class VerifyEmail implements OnInit {
         }
       }
     });
+  }
+
+  goToLogin(): void {
+    this.router.navigate(['/login']);
   }
 }
